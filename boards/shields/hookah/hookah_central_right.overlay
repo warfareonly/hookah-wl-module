@@ -2,17 +2,17 @@
 
 &kscan0
 {
-    col - gpios = <&pro_micro 18 GPIO_ACTIVE_HIGH>, <&pro_micro 5 GPIO_ACTIVE_HIGH>, <&pro_micro 20 GPIO_ACTIVE_HIGH>, <&pro_micro 3 GPIO_ACTIVE_HIGH>, <&pro_micro 2 GPIO_ACTIVE_HIGH>, <&pro_micro 21 GPIO_ACTIVE_HIGH>;
+    col-gpios = <&pro_micro 18 GPIO_ACTIVE_HIGH>, <&pro_micro 5 GPIO_ACTIVE_HIGH>, <&pro_micro 20 GPIO_ACTIVE_HIGH>, <&pro_micro 3 GPIO_ACTIVE_HIGH>, <&pro_micro 2 GPIO_ACTIVE_HIGH>, <&pro_micro 21 GPIO_ACTIVE_HIGH>;
 };
 
 &default_transform
 {
-    col - offset = <6>;
+    col-offset = <6>;
 };
 
 &five_column_transform
 {
-    col - offset = <5>;
+    col-offset = <5>;
 };
 
 &right_encoder
@@ -481,25 +481,19 @@
 // This pinctrl state is used for receiving
 // For `UART_TX`, set an unused and unexposed pin
 // For `UART_RX`, set the PS/2 SDA pin number
-uart0_ps2_default:
-    uart0_ps2_default
-    {
-        group1
-        {
+uart0_ps2_default: uart0_ps2_default {
+    group1  {
             psels = MOUSE_PS2_PIN_UNEXPOSED_TX,
-            MOUSE_PS2_PIN_SDA_PINCTRL;
+                MOUSE_PS2_PIN_SDA_PINCTRL;
         };
     };
 
 // Set this to the same pins as uart0_ps2_default
-uart0_ps2_sleep:
-    uart0_ps2_sleep
-    {
-        group1
-        {
+uart0_ps2_sleep: uart0_ps2_sleep {
+    group1  {
             psels = MOUSE_PS2_PIN_UNEXPOSED_TX,
-            MOUSE_PS2_PIN_SDA_PINCTRL;
-            low - power - enable;
+                        MOUSE_PS2_PIN_SDA_PINCTRL;
+            low-power-enable;
         };
     };
 
@@ -511,13 +505,10 @@ uart0_ps2_sleep:
 // switching the UART controller to unexposed/unused pins.
 //
 // Then it configures the GPIO controller to use the SCL and SDA pins
-uart0_ps2_off:
-    uart0_ps2_off
-    {
-        group1
-        {
+uart0_ps2_off: uart0_ps2_off {
+    group1  {
             psels = MOUSE_PS2_PIN_UNEXPOSED_TX,
-            MOUSE_PS2_PIN_UNEXPOSED_RX;
+                        MOUSE_PS2_PIN_UNEXPOSED_RX;
         };
     };
 };
@@ -529,19 +520,19 @@ uart0_ps2_off:
     status = "disabled";
     compatible = "nordic,nrf-uarte";
 
-    current - speed = MOUSE_PS2_UART_BAUD_RATE;
-    pinctrl - 0 = <&uart0_ps2_default>;
-    pinctrl - 1 = <&uart0_ps2_off>;
+    current-speed = MOUSE_PS2_UART_BAUD_RATE;
+    pinctrl-0 = <&uart0_ps2_default>;
+    pinctrl-1 = <&uart0_ps2_off>;
 
-    pinctrl - names = "default", "sleep";
+    pinctrl-names = "default", "sleep";
 
 uart_ps2:
     uart_ps2
     {
         status = "disabled";
         compatible = "uart-ps2";
-        scl - gpios = MOUSE_PS2_PIN_SCL_PRO_MICRO;
-        sda - gpios = MOUSE_PS2_PIN_SDA_PRO_MICRO;
+        scl-gpios = MOUSE_PS2_PIN_SCL_PRO_MICRO;
+        sda-gpios = MOUSE_PS2_PIN_SDA_PRO_MICRO;
     };
 };
 
@@ -571,19 +562,17 @@ mouse_ps2:
         compatible = "zmk,input-mouse-ps2";
 
 #ifdef MOUSE_PS2_DRIVER_UART
-        ps2 - device = <&uart_ps2>;
+        ps2-device = <&uart_ps2>;
 #else
-        ps2 - device = <&gpio_ps2>;
+        ps2-device = <&gpio_ps2>;
 #endif
 
 #ifdef MOUSE_PS2_PIN_RST_PRO_MICRO
-        rst - gpios = MOUSE_PS2_PIN_RST_PRO_MICRO;
+        rst-gpios = MOUSE_PS2_PIN_RST_PRO_MICRO;
 #endif
     };
 
-mouse_ps2_input_listener:
-    mouse_ps2_input_listener
-    {
+mouse_ps2_input_listener: mouse_ps2_input_listener {
         compatible = "zmk,input-listener-ps2";
         status = "okay";
 
@@ -595,38 +584,36 @@ mouse_ps2_input_listener:
     };
 };
 
+
 /**
- *
- *   SPLIT RELAY
- *
- */
+*
+*   SPLIT RELAY
+*
+*/ 
 
 /* enable &pd0 on split peripheral. typical input device for zephyr input subsystem. */
 /* NOTE 1: use the same device alias (&pd0) on central and peripheral(s) is alright. */
 /* NOTE 2: input event shall be intecepted by module `zmk-split-peripheral-input-relay`. */
 
-/
-{
-/* THIS make keymap binding happy only, nothing happen on peripheral side */
-pd1:
-    virtual_input
-    {
-        compatible = "zmk,virtual-input";
-    };
 
-    /* for peripheral side, define (input-device)-to-(relay-channel) mapping */
-    input_relay_config_102
-    {
-        compatible = "zmk,split-peripheral-input-relay";
+/ {
+	/* THIS make keymap binding happy only, nothing happen on peripheral side */
+	pd1: virtual_input {
+		compatible = "zmk,virtual-input";
+	};
 
-        /* peripheral side input device, used to... */
-        /*  - be intecepted on peripheral; */
-        /*  - and then, be resurrected as `zmk,virtual-device` on central; */
-        device = <&mouse_ps2_input_listener>;
+	/* for peripheral side, define (input-device)-to-(relay-channel) mapping */
+	input_relay_config_102 {
+		compatible = "zmk,split-peripheral-input-relay";
 
-        /* channel id, used to be be transfered along with all input events. */
-        /* NOTE 1: pick any 8bit integer. (1 - 255) */
-        /* NOTE 2: should matching relay-channel on central overlay */
-        relay - channel = <102>;
-    };
+		/* peripheral side input device, used to... */
+		/*  - be intecepted on peripheral; */
+		/*  - and then, be resurrected as `zmk,virtual-device` on central; */
+		device = <&mouse_ps2_input_listener>;
+		
+		/* channel id, used to be be transfered along with all input events. */
+		/* NOTE 1: pick any 8bit integer. (1 - 255) */
+		/* NOTE 2: should matching relay-channel on central overlay */
+		relay-channel = <102>;
+	};
 };
