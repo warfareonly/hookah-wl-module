@@ -481,23 +481,18 @@
 // This pinctrl state is used for receiving
 // For `UART_TX`, set an unused and unexposed pin
 // For `UART_RX`, set the PS/2 SDA pin number
-uart0_ps2_default:
-    uart0_ps2_default
-    {
-        group1
-        {
+uart0_ps2_default: uart0_ps2_default {
+    group1  {
             psels = MOUSE_PS2_PIN_UNEXPOSED_TX,
-            MOUSE_PS2_PIN_SDA_PINCTRL;
+                MOUSE_PS2_PIN_SDA_PINCTRL;
         };
     };
 
 // Set this to the same pins as uart0_ps2_default
-uart0_ps2_sleep: uart0_ps2_sleep
-    {
-        group1
-        {
+uart0_ps2_sleep: uart0_ps2_sleep {
+    group1  {
             psels = MOUSE_PS2_PIN_UNEXPOSED_TX,
-            MOUSE_PS2_PIN_SDA_PINCTRL;
+                        MOUSE_PS2_PIN_SDA_PINCTRL;
             low-power-enable;
         };
     };
@@ -510,13 +505,10 @@ uart0_ps2_sleep: uart0_ps2_sleep
 // switching the UART controller to unexposed/unused pins.
 //
 // Then it configures the GPIO controller to use the SCL and SDA pins
-uart0_ps2_off:
-    uart0_ps2_off
-    {
-        group1
-        {
+uart0_ps2_off: uart0_ps2_off {
+    group1  {
             psels = MOUSE_PS2_PIN_UNEXPOSED_TX,
-            MOUSE_PS2_PIN_UNEXPOSED_RX;
+                        MOUSE_PS2_PIN_UNEXPOSED_RX;
         };
     };
 };
@@ -528,19 +520,19 @@ uart0_ps2_off:
     status = "disabled";
     compatible = "nordic,nrf-uarte";
 
-    current - speed = MOUSE_PS2_UART_BAUD_RATE;
-    pinctrl - 0 = <&uart0_ps2_default>;
-    pinctrl - 1 = <&uart0_ps2_off>;
+    current-speed = MOUSE_PS2_UART_BAUD_RATE;
+    pinctrl-0 = <&uart0_ps2_default>;
+    pinctrl-1 = <&uart0_ps2_off>;
 
-    pinctrl - names = "default", "sleep";
+    pinctrl-names = "default", "sleep";
 
 uart_ps2:
     uart_ps2
     {
         status = "disabled";
         compatible = "uart-ps2";
-        scl - gpios = MOUSE_PS2_PIN_SCL_PRO_MICRO;
-        sda - gpios = MOUSE_PS2_PIN_SDA_PRO_MICRO;
+        scl-gpios = MOUSE_PS2_PIN_SCL_PRO_MICRO;
+        sda-gpios = MOUSE_PS2_PIN_SDA_PRO_MICRO;
     };
 };
 
