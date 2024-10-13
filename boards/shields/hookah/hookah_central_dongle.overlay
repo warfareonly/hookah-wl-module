@@ -36,3 +36,15 @@
         prechargep = <0x22>;
     };
 };
+
+/ {
+	vtrackpoint: virtual_input_trackpoint {
+		compatible = "zmk,virtual-input";
+	};
+
+	input_relay_config_trackpoint {
+		compatible = "zmk,split-peripheral-input-relay";
+		device = <&vtrackpoint>;
+		relay-channel = <102>;
+	};
+};
