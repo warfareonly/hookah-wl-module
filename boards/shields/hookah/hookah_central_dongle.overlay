@@ -4,8 +4,8 @@
 {
     chosen
     {
-        zmk, kscan = &mock_kscan;
-        zephyr, display = &oled;
+        zmk,kscan = &mock_kscan;
+        zephyr,display = &oled;
     };
 
 mock_kscan:
@@ -18,7 +18,7 @@ mock_kscan:
     };
 };
 
-/ delete -node / &kscan0; // only required if the dongle uses a
+/ delete-node / &kscan0; // only required if the dongle uses a
                           // different board than the peripherals
                           // Since we do that, we have to delete the node.
 
@@ -33,13 +33,13 @@ oled:
         reg = <0x3c>;
         width = <128>;
         height = <64>;
-        segment - offset = <0>;
-        page - offset = <0>;
-        display - offset = <0>;
-        multiplex - ratio = <63>;
-        segment - remap;
-        com - invdir;
-        inversion - on;
+        segment-offset = <0>;
+        page-offset = <0>;
+        display-offset = <0>;
+        multiplex-ratio = <63>;
+        segment-remap;
+        com-invdir;
+        inversion-on;
         prechargep = <0x22>;
     };
 };
