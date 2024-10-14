@@ -517,7 +517,7 @@ uart0_ps2_off: uart0_ps2_off {
 
 &uart0
 {
-    status = "disabled";
+    status = "okay";
     compatible = "nordic,nrf-uarte";
 
     current-speed = MOUSE_PS2_UART_BAUD_RATE;
@@ -529,7 +529,7 @@ uart0_ps2_off: uart0_ps2_off {
 uart_ps2:
     uart_ps2
     {
-        status = "disabled";
+        status = "okay";
         compatible = "uart-ps2";
         scl-gpios = MOUSE_PS2_PIN_SCL_PRO_MICRO;
         sda-gpios = MOUSE_PS2_PIN_SDA_PRO_MICRO;
