@@ -1,22 +1,24 @@
 #include "hookah.dtsi"
 
-&kscan0
-{
-    col-gpios = <&pro_micro 18 GPIO_ACTIVE_HIGH>, <&pro_micro 5 GPIO_ACTIVE_HIGH>, <&pro_micro 20 GPIO_ACTIVE_HIGH>, <&pro_micro 3 GPIO_ACTIVE_HIGH>, <&pro_micro 2 GPIO_ACTIVE_HIGH>, <&pro_micro 21 GPIO_ACTIVE_HIGH>;
+&kscan0 {
+    col-gpios= <&pro_micro 18 GPIO_ACTIVE_HIGH>
+             , <&pro_micro 5 GPIO_ACTIVE_HIGH>
+             , <&pro_micro 20 GPIO_ACTIVE_HIGH>
+             , <&pro_micro 3 GPIO_ACTIVE_HIGH>
+             , <&pro_micro 2 GPIO_ACTIVE_HIGH>
+             , <&pro_micro 21 GPIO_ACTIVE_HIGH>
+             ;
 };
 
-&default_transform
-{
+&default_transform {
     col-offset = <6>;
 };
 
-&five_column_transform
-{
+&five_column_transform {
     col-offset = <5>;
 };
 
-&right_encoder
-{
+&right_encoder {
     status = "okay";
 };
 
