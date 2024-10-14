@@ -597,25 +597,25 @@ mouse_ps2_input_listener: mouse_ps2_input_listener {
 
 
 /**
-/ {
-	/* THIS make keymap binding happy only, nothing happen on peripheral side */
-	pd1: virtual_input {
-		compatible = "zmk,virtual-input";
-	};
-
-	/* for peripheral side, define (input-device)-to-(relay-channel) mapping */
-	input_relay_config_102 {
-		compatible = "zmk,split-peripheral-input-relay";
-
-		/* peripheral side input device, used to... */
-		/*  - be intecepted on peripheral; */
-		/*  - and then, be resurrected as `zmk,virtual-device` on central; */
-		device = <&mouse_ps2_input_listener>;
-		
-		/* channel id, used to be be transfered along with all input events. */
-		/* NOTE 1: pick any 8bit integer. (1 - 255) */
-		/* NOTE 2: should matching relay-channel on central overlay */
-		relay-channel = <102>;
-	};
-};
+* / {
+* 	/* THIS make keymap binding happy only, nothing happen on peripheral side */
+* 	pd1: virtual_input {
+* 		compatible = "zmk,virtual-input";
+* 	};
+* 
+* 	/* for peripheral side, define (input-device)-to-(relay-channel) mapping */
+* 	input_relay_config_102 {
+* 		compatible = "zmk,split-peripheral-input-relay";
+* 
+* 		/* peripheral side input device, used to... */
+* 		/*  - be intecepted on peripheral; */
+* 		/*  - and then, be resurrected as `zmk,virtual-device` on central; */
+* 		device = <&mouse_ps2_input_listener>;
+* 		
+* 		/* channel id, used to be be transfered along with all input events. */
+* 		/* NOTE 1: pick any 8bit integer. (1 - 255) */
+* 		/* NOTE 2: should matching relay-channel on central overlay */
+* 		relay-channel = <102>;
+* 	};
+* };
 */
