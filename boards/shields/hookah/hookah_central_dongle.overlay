@@ -37,6 +37,7 @@
     };
 };
 
+/** 
 / {
 	vtrackpoint: virtual_input_trackpoint {
 		compatible = "zmk,virtual-input";
@@ -48,3 +49,4 @@
 		relay-channel = <102>;
 	};
 };
+*/
