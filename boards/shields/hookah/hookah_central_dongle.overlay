@@ -1,12 +1,16 @@
 #include "hookah.dtsi"
 
-/ {
-    chosen {
-        zmk,kscan = &mock_kscan;
-        zephyr,display = &oled;
+/
+{
+    chosen
+    {
+        zmk, kscan = &mock_kscan;
+        zephyr, display = &oled;
     };
 
-    mock_kscan: kscan_1 {
+mock_kscan:
+    kscan_1
+    {
         compatible = "zmk,kscan-mock";
         columns = <0>;
         rows = <0>;
@@ -14,39 +18,28 @@
     };
 };
 
-/delete-node/ &kscan0;   // only required if the dongle uses a 
-                                // different board than the peripherals
-                                // Since we do that, we have to delete the node.
+/ delete -node / &kscan0; // only required if the dongle uses a
+                          // different board than the peripherals
+                          // Since we do that, we have to delete the node.
 
-&pro_micro_i2c {
+&pro_micro_i2c
+{
     status = "okay";
-    
-    oled: ssd1306@3c {
+
+oled:
+    ssd1306 @3c
+    {
         compatible = "solomon,ssd1306fb";
         reg = <0x3c>;
         width = <128>;
         height = <64>;
-        segment-offset = <0>;
-        page-offset = <0>;
-        display-offset = <0>;
-        multiplex-ratio = <63>;
-        segment-remap;
-        com-invdir;
-        inversion-on;
+        segment - offset = <0>;
+        page - offset = <0>;
+        display - offset = <0>;
+        multiplex - ratio = <63>;
+        segment - remap;
+        com - invdir;
+        inversion - on;
         prechargep = <0x22>;
     };
 };
-
-/** 
-* / {
-* 	vtrackpoint: virtual_input_trackpoint {
-* 		compatible = "zmk,virtual-input";
-* 	};
-* 
-* 	input_relay_config_trackpoint {
-* 		compatible = "zmk,split-peripheral-input-relay";
-* 		device = <&vtrackpoint>;
-* 		relay-channel = <102>;
-* 	};
-* };
-*/
